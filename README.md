@@ -92,23 +92,23 @@ Nếu bạn cần hỗ trợ hoặc báo cáo lỗi, hãy liên hệ chúng tôi
 - Truy cập `Alchemy` -> đăng ký tài khoản.
 - Truy cập `Dashbroad` -> `Apps` -> `Create new app`
   
-![Ảnh](img/t3rn-alchemy.png)
+![Ảnh](images/t3rn-alchemy.png)
 
 - Điền thông tin app
   
-![Ảnh](img/t3rn-createapp.png)
+![Ảnh](images/t3rn-createapp.png)
 
 - Chọn mạng (ARB, OP, BASE, BLAST)
 
-![Ảnh](img/t3rn-select.png)
+![Ảnh](images/t3rn-select.png)
 
 - Chọn tất cả các dịch vụ
 
-![Ảnh](img/t3rn-service.png)
+![Ảnh](images/t3rn-service.png)
 
 - Chuyển tab `Networks` -> đổi mạng sang Sepolia cho các mạng vừa chọn
 
-![Ảnh](img/t3rn-finish.png)
+![Ảnh](images/t3rn-finish.png)
 
 **RPC sẽ tương tự như này:**
   - ARBT: https://arb-sepolia.g.alchemy.com/v2/xxxx
@@ -142,10 +142,10 @@ bash ./t3rnSetup.sh
 **Cấu hình node**
   - Chọn tác vụ `1` -> Điền các `RPC`, `Gas` , `PrivateKey` như sau (Gas khuyến nghị >= 100).
  
- ![Ảnh](img/t3rn-config.png)
+ ![Ảnh](images/t3rn-config.png)
   - Chọn tác vụ `2` -> xem trạng thái node.
   
- ![Ảnh](img/t3rn-logs.png)
+ ![Ảnh](images/t3rn-logs.png)
   > Khi thấy logs được sync là bạn đã cài đặt thành công
   > BRN nhận được phụ thuộc vào số lượng bid thành công của bạn (tăng gas sẽ dễ dàng nhận được bid hơn)
 
