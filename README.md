@@ -83,6 +83,7 @@ Nếu bạn cần hỗ trợ hoặc báo cáo lỗi, hãy liên hệ chúng tôi
 
 
 ## 1. Phiên bản
+[LINUX - T3rn Executor v0.33.0](https://github.com/fat-murphy/t3rn-executor/archive/refs/tags/v0.32.0.tar.gz)
 [LINUX - T3rn Executor v0.32.0](https://github.com/fat-murphy/t3rn-executor/archive/refs/tags/v0.32.0.tar.gz)
 
 ## 2. Đăng ký
@@ -132,7 +133,7 @@ apt install curl -y
 ```
 # Cài đặt node
 
-curl -L -o t3rnSetup.zip https://github.com/user-attachments/files/18298261/t3rnSetup.zip && \
+curl -L -o t3rnSetup.zip link && \
 unzip t3rnSetup.zip && \
 chmod +x ./t3rnSetup.sh && \
 rm -rf t3rnSetup.zip && \
@@ -153,4 +154,4 @@ bash ./t3rnSetup.sh
 
 ## 4. Kiểm tra số lượng BRN
 **Truy cập đường link sau, thay thế `address` bằng địa chỉ của bạn:**
-https://bridge.t1rn.io/executor/address/total
+https://bridge.t1rn.io/executor/address

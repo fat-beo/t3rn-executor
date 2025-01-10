@@ -56,9 +56,21 @@ Twitter: https://x.com/Murphy_Node
 }
 
 function install() {
+    # Tải thư viện phụ
+    apt install curl -y
+
+
+    # Tạo thư mục
+    echo "Đang tạo thư mục t3rn..."
+    mkdir t3rn
+    cd t3rn
+
     # Tải dữ liệu
-    echo "Đang tải executor-linux-v0.32.0.tar.gz..."
-    wget https://github.com/t3rn/executor-release/releases/download/v0.32.0/executor-linux-v0.32.0.tar.gz
+    echo "Đang tải executor-linux-v0.33.0.tar.gz..."
+    curl -s https://api.github.com/repos/t3rn/executor-release/releases/latest | \
+    grep -Po '"tag_name": "\K.*?(?=")' | \
+    xargs -I {} wget https://github.com/t3rn/executor-release/releases/download/{}/executor-linux-{}.tar.gz
+
 
     # Kiểm tra trạng thái
     if [ $? -eq 0 ]; then
@@ -69,15 +81,15 @@ function install() {
     fi
 
     # Giải nén
-    echo "Giải nén executor-linux-v0.32.0.tar.gz..."
-    tar -xvzf executor-linux-v0.32.0.tar.gz
+    echo "Giải nén executor-linux-v0.33.0.tar.gz..."
+    tar -xzf executor-linux-*.tar.gz
 
     # Kiểm tra cài đặt thành công
     if [ $? -eq 0 ]; then
         echo "Giải nén thành công."
     else
         echo "Giải nén thất bại. Thực hiện câu lệnh 'ls -a' để kiểm tra tập tin."
-        rm executor-linux-v0.32.0.tar.gz
+        rm executor-linux-v0.33.0.tar.gz
         exit 1
     fi
 
