@@ -84,6 +84,7 @@ Nếu bạn cần hỗ trợ hoặc báo cáo lỗi, hãy liên hệ chúng tôi
 
 ## 1. Phiên bản
 [LINUX - T3rn Executor v0.33.0](https://github.com/fat-murphy/t3rn-executor/archive/refs/tags/v0.32.0.tar.gz)
+
 [LINUX - T3rn Executor v0.32.0](https://github.com/fat-murphy/t3rn-executor/archive/refs/tags/v0.32.0.tar.gz)
 
 ## 2. Đăng ký
