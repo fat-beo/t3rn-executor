@@ -14,9 +14,8 @@
 
 Nếu bạn cần hỗ trợ hoặc báo cáo lỗi, hãy liên hệ chúng tôi qua:
 
-- [Telegram](https://t.me/) 
-- [Twitter](https://x.com/fat) 
-- [Linktr.ee](https://linktr.ee/murphynodeteam)
+- [Telegram](https://t.me/urifallon) 
+- [Twitter](https://x.com/gnoud_ur1) 
 ## Yêu cầu tài nguyên
 **Cấu hình:**
 <table border="1">
