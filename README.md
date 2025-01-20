@@ -83,6 +83,8 @@ Nếu bạn cần hỗ trợ hoặc báo cáo lỗi, hãy liên hệ chúng tôi
 
 
 ## 1. Phiên bản
+[LINUX - T3rn Executor v0.40.0](https://github.com/fat-murphy/t3rn-executor/archive/refs/tags/v0.40.0.tar.gz)
+
 [LINUX - T3rn Executor v0.33.0](https://github.com/fat-murphy/t3rn-executor/archive/refs/tags/v0.32.0.tar.gz)
 
 [LINUX - T3rn Executor v0.32.0](https://github.com/fat-murphy/t3rn-executor/archive/refs/tags/v0.32.0.tar.gz)
@@ -134,9 +136,7 @@ apt install curl -y
 ```
 # Cài đặt node
 
-curl -L https://raw.githubusercontent.com/Murphylabs2024/T3rn-executor/refs/heads/main/code/t3rnSetup.sh -o t3rnSetup.sh && \
-chmod +x ./t3rnSetup.sh && \
-bash ./t3rnSetup.sh
+wget -O v0.40.0.sh https://raw.githubusercontent.com/fat-murphy/t3rn-executor/refs/heads/main/code/v0.40.0.sh && sed -i 's/\r$//' v0.40.0.sh && chmod +x v0.40.0.sh  && ./v0.40.0.sh
 ```
 
 **Cấu hình node**
