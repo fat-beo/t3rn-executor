@@ -62,7 +62,7 @@ Nếu bạn cần hỗ trợ hoặc báo cáo lỗi, hãy liên hệ chúng tôi
     <td>>= 2 ETH testnet</td>
   </tr>
     <tr>
-    <td>blast-sepolia</td>
+    <td>Unichain</td>
     <td>>= 2 ETH testnet</td>
   </tr>
   <tr>
@@ -74,17 +74,19 @@ Nếu bạn cần hỗ trợ hoặc báo cáo lỗi, hãy liên hệ chúng tôi
     <td>>= 10 ETH testnet</td>
   </tr>
   <tr>
-    <td>l1rn (<a  href="https://faucet.brn.t3rn.io/" target="_blank"> faucet here</a> )</td>
-    <td>> 0.1 BRN</td>
+    <td>BRN (<a  href="https://b2n.hub.caldera.xyz" target="_blank"> faucet here</a> )</td>
+    <td>> 0.01 BRN</td>
   </tr>
 </table>
 
 
 
 ## 1. Phiên bản
+[LINUX - T3rn Executor v0.53.1](https://github.com/fat-murphy/t3rn-executor/archive/refs/tags/v0.53.1.tar.gz)
+
 [LINUX - T3rn Executor v0.40.0](https://github.com/fat-murphy/t3rn-executor/archive/refs/tags/v0.40.0.tar.gz)
 
-[LINUX - T3rn Executor v0.33.0](https://github.com/fat-murphy/t3rn-executor/archive/refs/tags/v0.32.0.tar.gz)
+[LINUX - T3rn Executor v0.33.0](https://github.com/fat-murphy/t3rn-executor/archive/refs/tags/v0.33.0.tar.gz)
 
 [LINUX - T3rn Executor v0.32.0](https://github.com/fat-murphy/t3rn-executor/archive/refs/tags/v0.32.0.tar.gz)
 
@@ -101,7 +103,7 @@ Nếu bạn cần hỗ trợ hoặc báo cáo lỗi, hãy liên hệ chúng tôi
   
 ![Ảnh](./images/t3rn-createapp.jpg)
 
-- Chọn mạng (ARB, OP, BASE, BLAST)
+- Chọn mạng (ARB, OP, BASE)
 
 ![Ảnh](./images/t3rn-select.jpg)
 
@@ -117,7 +119,6 @@ Nếu bạn cần hỗ trợ hoặc báo cáo lỗi, hãy liên hệ chúng tôi
   - ARBT: https://arb-sepolia.g.alchemy.com/v2/xxxx
   - BSSP: https://base-sepolia.g.alchemy.com/v2/xxxx
   - OPPS: https://opt-sepolia.g.alchemy.com/v2/xxxx
-  - BLSS: https://blast-sepolia.g.alchemy.com/v2/xxxx
 
 ## 3. Thiết lập và cài đặt
 **Tải file cấu hình và giải nén**
@@ -135,7 +136,7 @@ apt install curl -y
 ```
 # Cài đặt node
 
-wget -O v0.40.0.sh https://raw.githubusercontent.com/fat-murphy/t3rn-executor/refs/heads/main/code/v0.40.0.sh && sed -i 's/\r$//' v0.40.0.sh && chmod +x v0.40.0.sh  && ./v0.40.0.sh
+wget -O v0.53.1.sh https://raw.githubusercontent.com/fat-beo/t3rn-executor/refs/heads/main/code/v0.53.1.sh && sed -i 's/\r$//' v0.53.1.sh && chmod +x v0.53.1.sh  && ./v0.53.1.sh
 ```
 
 **Cấu hình node**
@@ -152,4 +153,4 @@ wget -O v0.40.0.sh https://raw.githubusercontent.com/fat-murphy/t3rn-executor/re
 
 ## 4. Kiểm tra số lượng BRN
 **Truy cập đường link sau, thay thế `address` bằng địa chỉ của bạn:**
-https://bridge.t1rn.io/executor/address
+[Exeplorer](https://b2n.explorer.caldera.xyz/)
