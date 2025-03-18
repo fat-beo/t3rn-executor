@@ -19,7 +19,7 @@ function main() {
 |_|/_/   \_|_|   |_|  |_|\___/|_| \_|_|   |_| |_| |_|   
 
 =======================================================
-Github: https://github.com/fat-murphy
+Github: https://github.com/fat-beo
 Telegram: https://t.me/MurphyNodeRunner
 Twitter: https://x.com/Murphy_Node
 =======================================================
@@ -80,7 +80,7 @@ function install() {
     cd t3rn
 
     # Tải dữ liệu
-    echo "Đang tải executor-linux-v0.40.0.tar.gz..."
+    echo "Đang tải executor-linux-v0.53.1.tar.gz..."
     curl -s https://api.github.com/repos/t3rn/executor-release/releases/latest | \
     grep -Po '"tag_name": "\K.*?(?=")' | \
     xargs -I {} wget https://github.com/t3rn/executor-release/releases/download/{}/executor-linux-{}.tar.gz
@@ -95,7 +95,7 @@ function install() {
     fi
 
     # Giải nén
-    echo "Giải nén executor-linux-v0.40.0.tar.gz..."
+    echo "Giải nén executor-linux-v0.53.1.tar.gz..."
     tar -xzf executor-linux-*.tar.gz
 
     # Kiểm tra cài đặt thành công
@@ -111,12 +111,12 @@ function install() {
     # ls | grep -q 'folder'
 
     # Cấu hình node
-    read -p "Nhập RPC_ENDPOINTS_ARBT: " RPC_ENDPOINTS_ARBT
-    read -p "Nhập RPC_ENDPOINTS_BSSP: " RPC_ENDPOINTS_BSSP
-    read -p "Nhập RPC_ENDPOINTS_OPSP: " RPC_ENDPOINTS_OPSP
-    read -p "Nhập RPC_ENDPOINTS_BLSS: " RPC_ENDPOINTS_BLSS
+    read -p "Nhập RPC TESTNET ARBT: " RPC_ENDPOINTS_ARBT
+    read -p "Nhập RPC TESTNET BSSP: " RPC_ENDPOINTS_BSSP
+    read -p "Nhập RPC TESTNET OPSP: " RPC_ENDPOINTS_OPSP
+    read -p "Nhập RPC TESTNET UNIT: " RPC_ENDPOINTS_UNIT
     read -p "Nhập EXECUTOR_MAX_L3_GAS_PRICE: " EXECUTOR_MAX_L3_GAS_PRICE
-    read -p "Nhập PRIVATE_KEY_LOCAL: " PRIVATE_KEY_LOCAL
+    read -p "Nhập PRIVATE_KEY_LOCAL (Không chứa '0x'): " PRIVATE_KEY_LOCAL
 
     # Cấu hình dịch vụ
     sudo tee /etc/systemd/system/t3rn-executor.service > /dev/null <<EOF
@@ -125,20 +125,22 @@ function install() {
     After=network.target
 
     [Service]
-    ExecStart=/root/executor/executor/bin/executor
+    ExecStart=/root/t3rn/executor/executor/bin/executor
     Environment="NODE_ENV=testnet"
     Environment="LOG_LEVEL=debug"
     Environment="LOG_PRETTY=false"
-    Environment="ENABLED_NETWORKS=arbitrum-sepolia,base-sepolia,blast-sepolia,optimism-sepolia,l1rn"
-    Environment="RPC_ENDPOINTS_L1RN=https://brn.rpc.caldera.xyz/"
-    Environment="RPC_ENDPOINTS_ARBT=$RPC_ENDPOINTS_ARBT"
-    Environment="RPC_ENDPOINTS_BSSP=$RPC_ENDPOINTS_BSSP"
-    Environment="RPC_ENDPOINTS_BLSS=$RPC_ENDPOINTS_BLSS"
-    Environment="RPC_ENDPOINTS_OPSP=$RPC_ENDPOINTS_OPSP"
+    Environment="ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,optimism-sepolia,l2rn'"
+    Environment="RPC_ENDPOINTS='{
+    "l2rn": ["https://b2n.rpc.caldera.xyz/http"],
+    "arbt": ["https://arbitrum-sepolia.drpc.org", "$RPC_ENDPOINTS_ARBT"],
+    "bast": ["https://base-sepolia-rpc.publicnode.com", "$RPC_ENDPOINTS_BSSP],
+    "opst": ["https://sepolia.optimism.io", "$RPC_ENDPOINTS_OPSP"],
+    "unit": ["https://unichain-sepolia.drpc.org", "$RPC_ENDPOINTS_UNIT"]}'"
     Environment="EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=false"
     Environment="EXECUTOR_MAX_L3_GAS_PRICE=$EXECUTOR_MAX_L3_GAS_PRICE"
-    Environment="EXECUTOR_PROCESS_ORDERS=true"
-    Environment="EXECUTOR_PROCESS_CLAIMS=true"
+    Environment="EXECUTOR_PROCESS_BIDS_ENABLED=true"
+    Environment="EXECUTOR_PROCESS_ORDERS_ENABLED=true"
+    Environment="EXECUTOR_PROCESS_CLAIMS_ENABLED=true"
     Environment="PRIVATE_KEY_LOCAL=$PRIVATE_KEY_LOCAL"
     Restart=always
     RestartSec=5
