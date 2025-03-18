@@ -35,35 +35,57 @@ Twitter: https://x.com/Murphy_Node
         read -p "Nhập lựa chọn (1/2/3/4): " select
         
         case $select in
-            1) install ;;
-            2) logs ;;
-            3) delete ;;
-            4) echo "Thoát!" ; exit 0 ;;
-            *) echo "Lỗi. Nhập lại lựa chọn hợp lệ 1 - 4." ;;
+            1)
+                install
+                ;;
+            2)
+                logs
+                ;;
+            3)
+                delete
+                ;;
+            4)
+                echo "Thoát!"
+                exit 0
+                ;;
+            *)
+                echo "Lỗi. Nhập lại lựa chọn hợp lệ 1 - 4."
+                ;;
         esac
     done
 }
 
 function install() {
+    # Cài đặt thư viện phụ trợ
     apt install curl -y
 
+    # Tạo thư mục
     echo "Đang tạo thư mục t3rn..."
     mkdir -p /root/t3rn
     cd /root/t3rn
 
+    # Tải dữ liệu từ GitHub
     echo "Đang tải executor-linux-v0.53.1.tar.gz..."
     curl -s https://api.github.com/repos/t3rn/executor-release/releases/latest | \
     grep -Po '"tag_name": "\K.*?(?=")' | \
     xargs -I {} wget https://github.com/t3rn/executor-release/releases/download/{}/executor-linux-{}.tar.gz
 
     if [ $? -ne 0 ]; then
-        echo "Tải dữ liệu thất bại!!"
+        echo "Tải dữ liệu thất bại!"
         exit 1
     fi
+    echo "Tải dữ liệu thành công."
 
+    # Giải nén tệp tải về
     echo "Giải nén executor-linux-v0.53.1.tar.gz..."
-    tar -xzf executor-linux-*.tar.gz || { echo "Giải nén thất bại."; exit 1; }
+    tar -xzf executor-linux-*.tar.gz
+    if [ $? -ne 0 ]; then
+        echo "Giải nén thất bại!"
+        exit 1
+    fi
+    echo "Giải nén thành công."
 
+    # Cấu hình biến môi trường
     read -p "Nhập RPC TESTNET ARBT: " RPC_ENDPOINTS_ARBT
     read -p "Nhập RPC TESTNET BSSP: " RPC_ENDPOINTS_BSSP
     read -p "Nhập RPC TESTNET OPSP: " RPC_ENDPOINTS_OPSP
@@ -71,32 +93,35 @@ function install() {
     read -p "Nhập EXECUTOR_MAX_L3_GAS_PRICE: " EXECUTOR_MAX_L3_GAS_PRICE
     read -p "Nhập PRIVATE_KEY_LOCAL (Không chứa '0x'): " PRIVATE_KEY_LOCAL
 
-    # Xuất biến môi trường
-    echo "Xuất biến môi trường..."
-    export NODE_ENV="testnet"
-    export LOG_LEVEL="debug"
-    export LOG_PRETTY="false"
-    export ENABLED_NETWORKS="arbitrum-sepolia,base-sepolia,optimism-sepolia,l2rn"
-    export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API="false"
-    export EXECUTOR_MAX_L3_GAS_PRICE="$EXECUTOR_MAX_L3_GAS_PRICE"
-    export EXECUTOR_PROCESS_BIDS_ENABLED="true"
-    export EXECUTOR_PROCESS_ORDERS_ENABLED="true"
-    export EXECUTOR_PROCESS_CLAIMS_ENABLED="true"
-    export PRIVATE_KEY_LOCAL="$PRIVATE_KEY_LOCAL"
-    export RPC_ENDPOINTS="{\"l2rn\": [\"https://b2n.rpc.caldera.xyz/http\"],\
-        \"arbt\": [\"https://arbitrum-sepolia.drpc.org\", \"$RPC_ENDPOINTS_ARBT\"],\
-        \"bast\": [\"https://base-sepolia-rpc.publicnode.com\", \"$RPC_ENDPOINTS_BSSP\"],\
-        \"opst\": [\"https://sepolia.optimism.io\", \"$RPC_ENDPOINTS_OPSP\"],\
-        \"unit\": [\"https://unichain-sepolia.drpc.org\", \"$RPC_ENDPOINTS_UNIT\"]}"
+    # Lưu biến môi trường vào file
+    cat <<EOF > /root/t3rn/executor/env.sh
+export NODE_ENV="testnet"
+export LOG_LEVEL="debug"
+export LOG_PRETTY="false"
+export ENABLED_NETWORKS="arbitrum-sepolia,base-sepolia,optimism-sepolia,l2rn"
+export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API="false"
+export EXECUTOR_MAX_L3_GAS_PRICE="$EXECUTOR_MAX_L3_GAS_PRICE"
+export EXECUTOR_PROCESS_BIDS_ENABLED="true"
+export EXECUTOR_PROCESS_ORDERS_ENABLED="true"
+export EXECUTOR_PROCESS_CLAIMS_ENABLED="true"
+export PRIVATE_KEY_LOCAL="$PRIVATE_KEY_LOCAL"
+export RPC_ENDPOINTS='{
+    "l2rn": ["https://b2n.rpc.caldera.xyz/http"],
+    "arbt": ["https://arbitrum-sepolia.drpc.org", "$RPC_ENDPOINTS_ARBT"],
+    "bast": ["https://base-sepolia-rpc.publicnode.com", "$RPC_ENDPOINTS_BSSP"],
+    "opst": ["https://sepolia.optimism.io", "$RPC_ENDPOINTS_OPSP"],
+    "unit": ["https://unichain-sepolia.drpc.org", "$RPC_ENDPOINTS_UNIT"]
+}'
+EOF
 
-    # Tạo systemd service mà không chứa biến môi trường
+    # Cấu hình service
     sudo tee /etc/systemd/system/t3rn-executor.service > /dev/null <<EOF
 [Unit]
 Description=t3rn Executor Service
 After=network.target
 
 [Service]
-ExecStart=/root/t3rn/executor/executor/bin/executor
+ExecStart=/bin/bash -c 'source /root/t3rn/executor/env.sh && exec /root/t3rn/executor/executor/bin/executor'
 Restart=always
 RestartSec=5
 User=root
@@ -110,29 +135,27 @@ EOF
     sudo systemctl enable t3rn-executor.service
     sudo systemctl start t3rn-executor.service
 
-    echo "Cài đặt hoàn tất!"
-    read -n 1 -s -r -p "Nhập phím bất kỳ để quay lại menu..."
+    read -n 1 -s -r -p "Nhấn phím bất kỳ để quay lại menu..."
     main
 }
 
+# Xem logs của node
 function logs() {
     journalctl -u t3rn-executor.service -f
-    read -n 1 -s -r -p "Nhập phím bất kỳ để quay lại menu..."
+    read -n 1 -s -r -p "Nhấn phím bất kỳ để quay lại menu..."
     main
 }
 
+# Xóa node
 function delete() {
     sudo systemctl stop t3rn-executor.service
     sudo systemctl disable t3rn-executor.service
-    sudo rm /etc/systemd/system/t3rn-executor.service
-
-    echo "Xóa executor..."
+    sudo rm -f /etc/systemd/system/t3rn-executor.service
     sudo rm -rf /root/t3rn
-
     sudo systemctl daemon-reload
-    echo "Xóa node thành công."
-    
-    read -n 1 -s -r -p "Nhập phím bất kỳ để quay lại menu..."
+    echo "Node đã được xóa thành công."
+
+    read -n 1 -s -r -p "Nhấn phím bất kỳ để quay lại menu..."
     main
 }
 
