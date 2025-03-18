@@ -123,29 +123,30 @@ function install() {
     [Unit]
     Description=t3rn Executor Service
     After=network.target
-
+    
     [Service]
     ExecStart=/root/t3rn/executor/executor/bin/executor
     Environment="NODE_ENV=testnet"
     Environment="LOG_LEVEL=debug"
     Environment="LOG_PRETTY=false"
-    Environment="ENABLED_NETWORKS='arbitrum-sepolia,base-sepolia,optimism-sepolia,l2rn'"
-    Environment="RPC_ENDPOINTS='{
-    "l2rn": ["https://b2n.rpc.caldera.xyz/http"],
-    "arbt": ["https://arbitrum-sepolia.drpc.org", "$RPC_ENDPOINTS_ARBT"],
-    "bast": ["https://base-sepolia-rpc.publicnode.com", "$RPC_ENDPOINTS_BSSP],
-    "opst": ["https://sepolia.optimism.io", "$RPC_ENDPOINTS_OPSP"],
-    "unit": ["https://unichain-sepolia.drpc.org", "$RPC_ENDPOINTS_UNIT"]}'"
+    Environment="ENABLED_NETWORKS=arbitrum-sepolia,base-sepolia,optimism-sepolia,l2rn"
     Environment="EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=false"
     Environment="EXECUTOR_MAX_L3_GAS_PRICE=$EXECUTOR_MAX_L3_GAS_PRICE"
     Environment="EXECUTOR_PROCESS_BIDS_ENABLED=true"
     Environment="EXECUTOR_PROCESS_ORDERS_ENABLED=true"
     Environment="EXECUTOR_PROCESS_CLAIMS_ENABLED=true"
     Environment="PRIVATE_KEY_LOCAL=$PRIVATE_KEY_LOCAL"
+    Environment="RPC_ENDPOINTS={\
+        \"l2rn\": [\"https://b2n.rpc.caldera.xyz/http\"],\
+        \"arbt\": [\"https://arbitrum-sepolia.drpc.org\", \"$RPC_ENDPOINTS_ARBT\"],\
+        \"bast\": [\"https://base-sepolia-rpc.publicnode.com\", \"$RPC_ENDPOINTS_BSSP\"],\
+        \"opst\": [\"https://sepolia.optimism.io\", \"$RPC_ENDPOINTS_OPSP\"],\
+        \"unit\": [\"https://unichain-sepolia.drpc.org\", \"$RPC_ENDPOINTS_UNIT\"]\
+    }"
     Restart=always
     RestartSec=5
     User=$USER
-
+    
     [Install]
     WantedBy=multi-user.target
 EOF
