@@ -65,11 +65,11 @@ function install() {
     mkdir -p /root/t3rn
     cd /root/t3rn
 
-    # Tải dữ liệu từ GitHub
-    # Download latest release
+    # Tải phiên bản mới nhất từ GitHub
+    echo "Đang tải executor-linux từ GitHub..."
     curl -s https://api.github.com/repos/t3rn/executor-release/releases/latest | \
     grep -Po '"tag_name": "\K.*?(?=")' | \
-    xargs -I {} wget https://github.com/t3rn/executor-release/releases/download/{}/executor-linux-{}.tar.gz
+    xargs -I {} wget -q https://github.com/t3rn/executor-release/releases/download/{}/executor-linux-{}.tar.gz
 
     if [ $? -ne 0 ]; then
         echo "Tải dữ liệu thất bại!"
@@ -94,28 +94,21 @@ function install() {
     read -p "Nhập EXECUTOR_MAX_L3_GAS_PRICE: " EXECUTOR_MAX_L3_GAS_PRICE
     read -p "Nhập PRIVATE_KEY_LOCAL (Không chứa '0x'): " PRIVATE_KEY_LOCAL
 
-    # Tạo file env.sh
+    # Tạo file env.sh với định dạng phù hợp cho systemd
     echo "Tạo file biến môi trường env.sh..."
     cat <<EOF > /root/t3rn/executor/env.sh
-#!/bin/bash
-
-export NODE_ENV="testnet"
-export LOG_LEVEL="debug"
-export LOG_PRETTY="false"
-export ENABLED_NETWORKS="arbitrum-sepolia,base-sepolia,optimism-sepolia,l2rn"
-export EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API="false"
-export EXECUTOR_PROCESS_BIDS_ENABLED="true"
-export EXECUTOR_PROCESS_ORDERS_ENABLED="true"
-export EXECUTOR_PROCESS_CLAIMS_ENABLED="true"
-export EXECUTOR_MAX_L3_GAS_PRICE="$EXECUTOR_MAX_L3_GAS_PRICE"
-export PRIVATE_KEY_LOCAL="$PRIVATE_KEY_LOCAL"
-export RPC_ENDPOINTS='{
-    "l2rn": ["https://b2n.rpc.caldera.xyz/http"],
-    "arbt": ["https://arbitrum-sepolia.drpc.org", "$RPC_ENDPOINTS_ARBT"],
-    "bast": ["https://base-sepolia-rpc.publicnode.com", "$RPC_ENDPOINTS_BSSP"],
-    "opst": ["https://sepolia.optimism.io", "$RPC_ENDPOINTS_OPSP"],
-    "unit": ["https://unichain-sepolia.drpc.org", "$RPC_ENDPOINTS_UNIT"]
-}'
+ENVIRONMENT=testnet
+NODE_ENV=testnet
+LOG_LEVEL=debug
+LOG_PRETTY=false
+ENABLED_NETWORKS=arbitrum-sepolia,base-sepolia,optimism-sepolia,l2rn
+EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=false
+EXECUTOR_PROCESS_BIDS_ENABLED=true
+EXECUTOR_PROCESS_ORDERS_ENABLED=true
+EXECUTOR_PROCESS_CLAIMS_ENABLED=true
+EXECUTOR_MAX_L3_GAS_PRICE=$EXECUTOR_MAX_L3_GAS_PRICE
+PRIVATE_KEY_LOCAL=$PRIVATE_KEY_LOCAL
+RPC_ENDPOINTS={"l2rn": ["https://b2n.rpc.caldera.xyz/http"], "arbt": ["https://arbitrum-sepolia.drpc.org", "$RPC_ENDPOINTS_ARBT"], "bast": ["https://base-sepolia-rpc.publicnode.com", "$RPC_ENDPOINTS_BSSP"], "opst": ["https://sepolia.optimism.io", "$RPC_ENDPOINTS_OPSP"], "unit": ["https://unichain-sepolia.drpc.org", "$RPC_ENDPOINTS_UNIT"]}
 EOF
 
     # Đặt quyền cho file env.sh
