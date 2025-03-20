@@ -1,16 +1,6 @@
 # T3rn Executor
 # Hướng dẫn cài đặt T3rn Executor tự động.
-``` 
-=======================================================
- _____ _  _____   __  __ _   _ ____  ____  _   ___   __ 
-|  ___/ \|_   _| |  \/  | | | |  _ \|  _ \| | | \ \ / / 
-| |_ / _ \ | |   | |\/| | | | | |_) | |_) | |_| |\ V /  
-|  _/ ___ \| |   | |  | | |_| |  _ <|  __/|  _  | | |   
-|_|/_/   \_|_|   |_|  |_|\___/|_| \_|_|   |_| |_| |_|   
-
-=======================================================
-```
----
+![Ảnh](./images/fatbeo_murphy.png)
 
 Nếu bạn cần hỗ trợ hoặc báo cáo lỗi, hãy liên hệ chúng tôi qua:
 
@@ -82,13 +72,7 @@ Nếu bạn cần hỗ trợ hoặc báo cáo lỗi, hãy liên hệ chúng tôi
 
 
 ## 1. Phiên bản
-[LINUX - T3rn Executor v0.53.1](https://github.com/fat-murphy/t3rn-executor/archive/refs/tags/v0.53.1.tar.gz)
-
-[LINUX - T3rn Executor v0.40.0](https://github.com/fat-murphy/t3rn-executor/archive/refs/tags/v0.40.0.tar.gz)
-
-[LINUX - T3rn Executor v0.33.0](https://github.com/fat-murphy/t3rn-executor/archive/refs/tags/v0.33.0.tar.gz)
-
-[LINUX - T3rn Executor v0.32.0](https://github.com/fat-murphy/t3rn-executor/archive/refs/tags/v0.32.0.tar.gz)
+| Đã được tự động
 
 ## 2. Đăng ký
 
@@ -124,19 +108,15 @@ Nếu bạn cần hỗ trợ hoặc báo cáo lỗi, hãy liên hệ chúng tôi
 **Tải file cấu hình và giải nén**
 ```
 # Truy cập quyền root
-
 sudo -i
 ```
 ```
-# Cập nhật hệ thống và cài đặt curl
-
-apt-get update && apt-get upgrade -y
-apt install curl -y
+# Cài đặt executor
+wget -O v2executor.sh https://raw.githubusercontent.com/fat-beo/t3rn-executor/refs/heads/main/v2executor.sh && sed -i 's/\r$//' v2executor.sh && chmod +x v2executor.sh
 ```
 ```
-# Cài đặt node
-
-wget -O v0.53.1.sh https://raw.githubusercontent.com/fat-beo/t3rn-executor/refs/heads/main/code/v0.53.1.sh && sed -i 's/\r$//' v0.53.1.sh && chmod +x v0.53.1.sh  && ./v0.53.1.sh
+# Chạy executor
+./v2executor.sh
 ```
 
 **Cấu hình node**
@@ -152,5 +132,5 @@ wget -O v0.53.1.sh https://raw.githubusercontent.com/fat-beo/t3rn-executor/refs/
   > BRN nhận được phụ thuộc vào số lượng bid thành công của bạn (tăng gas sẽ dễ dàng nhận được bid hơn)
 
 ## 4. Kiểm tra số lượng BRN
-**Truy cập đường link sau, thay thế `address` bằng địa chỉ của bạn:**
+**Truy cập đường link sau:**
 [Exeplorer](https://b2n.explorer.caldera.xyz/)
