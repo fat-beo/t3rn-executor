@@ -66,10 +66,10 @@ function install() {
     cd /root/t3rn
 
     # Tải dữ liệu từ GitHub
-    echo "Đang tải executor-linux từ GitHub..."
+    # Download latest release
     curl -s https://api.github.com/repos/t3rn/executor-release/releases/latest | \
     grep -Po '"tag_name": "\K.*?(?=")' | \
-    xargs -I {} wget -q https://github.com/t3rn/executor-release/releases/download/{}/executor-linux-{}.tar.gz
+    xargs -I {} wget https://github.com/t3rn/executor-release/releases/download/{}/executor-linux-{}.tar.gz
 
     if [ $? -ne 0 ]; then
         echo "Tải dữ liệu thất bại!"
