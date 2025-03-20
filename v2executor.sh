@@ -101,14 +101,14 @@ ENVIRONMENT=testnet
 NODE_ENV=testnet
 LOG_LEVEL=debug
 LOG_PRETTY=false
-ENABLED_NETWORKS=arbitrum-sepolia,base-sepolia,optimism-sepolia,l2rn
+ENABLED_NETWORKS=arbitrum-sepolia,base-sepolia,optimism-sepolia,unichain-sepolia,l2rn
 EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=false
 EXECUTOR_PROCESS_BIDS_ENABLED=true
 EXECUTOR_PROCESS_ORDERS_ENABLED=true
 EXECUTOR_PROCESS_CLAIMS_ENABLED=true
 EXECUTOR_MAX_L3_GAS_PRICE=$EXECUTOR_MAX_L3_GAS_PRICE
 PRIVATE_KEY_LOCAL=$PRIVATE_KEY_LOCAL
-RPC_ENDPOINTS={"l2rn": ["https://b2n.rpc.caldera.xyz/http"], "arbt": ["https://arbitrum-sepolia.drpc.org", "$RPC_ENDPOINTS_ARBT"], "bast": ["https://base-sepolia-rpc.publicnode.com", "$RPC_ENDPOINTS_BSSP"], "opst": ["https://sepolia.optimism.io", "$RPC_ENDPOINTS_OPSP"], "unit": ["https://unichain-sepolia.drpc.org", "$RPC_ENDPOINTS_UNIT"]}
+RPC_ENDPOINTS={"l2rn": ["https://b2n.rpc.caldera.xyz/http"], "arbt": ["https://arbitrum-sepolia.drpc.org", "https://sepolia-rollup.arbitrum.io/rpc", "$RPC_ENDPOINTS_ARBT"], "bast": ["https://base-sepolia-rpc.publicnode.com", "https://base-sepolia.drpc.org", "$RPC_ENDPOINTS_BSSP"], "opst": ["https://sepolia.optimism.io", "https://optimism-sepolia.drpc.org", "$RPC_ENDPOINTS_OPSP"], "unit": ["https://unichain-sepolia.drpc.org", "https://sepolia.unichain.org", "$RPC_ENDPOINTS_UNIT"]}
 EOF
 
     # Đặt quyền cho file env.sh
