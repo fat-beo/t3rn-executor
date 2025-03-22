@@ -101,6 +101,7 @@ ENVIRONMENT=testnet
 NODE_ENV=testnet
 LOG_LEVEL=debug
 LOG_PRETTY=false
+NETWORKS_DISABLED='blast-sepolia'
 ENABLED_NETWORKS=arbitrum-sepolia,base-sepolia,optimism-sepolia,unichain-sepolia,l2rn
 EXECUTOR_PROCESS_PENDING_ORDERS_FROM_API=false
 EXECUTOR_PROCESS_BIDS_ENABLED=true
